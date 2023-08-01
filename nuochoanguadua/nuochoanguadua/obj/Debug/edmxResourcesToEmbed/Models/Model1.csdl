@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="nuochoa1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="chon">
+    <Key>
+      <PropertyRef Name="id_l" />
+    </Key>
+    <Property Name="id_l" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="loaihang" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ten" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="tien" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ghichu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="danhmuc_sp">
+    <Key>
+      <PropertyRef Name="iddm" />
+    </Key>
+    <Property Name="iddm" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tendm" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="hinhanh" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ghichu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="donhang">
+    <Key>
+      <PropertyRef Name="iddh" />
+    </Key>
+    <Property Name="iddh" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idtk" Type="Int32" />
+    <Property Name="idgh" Type="Int32" />
+    <Property Name="loinhan" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ngaygio" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="hanhchinh" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ghichu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="giohang">
+    <Key>
+      <PropertyRef Name="idgh" />
+    </Key>
+    <Property Name="idgh" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idtk" Type="Int32" />
+    <Property Name="idsp" Type="Int32" />
+    <Property Name="sl" Type="Int32" />
+    <Property Name="chon" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="giax1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="tongtien" Type="Int32" />
+    <Property Name="ghichu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="san_pham">
+    <Key>
+      <PropertyRef Name="idsp" />
+    </Key>
+    <Property Name="idsp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="iddm" Type="Int32" />
+    <Property Name="tensp" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="giatien" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="hinhanh" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ghichu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tk">
+    <Key>
+      <PropertyRef Name="idtk" />
+    </Key>
+    <Property Name="idtk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hoten" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="mk" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="sdt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="diachi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK__san_pham__iddm__286302EC">
+    <End Role="danhmuc_sp" Type="Self.danhmuc_sp" Multiplicity="0..1" />
+    <End Role="san_pham" Type="Self.san_pham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="danhmuc_sp">
+        <PropertyRef Name="iddm" />
+      </Principal>
+      <Dependent Role="san_pham">
+        <PropertyRef Name="iddm" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__donhang__idgh__31EC6D26">
+    <End Role="giohang" Type="Self.giohang" Multiplicity="0..1" />
+    <End Role="donhang" Type="Self.donhang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="giohang">
+        <PropertyRef Name="idgh" />
+      </Principal>
+      <Dependent Role="donhang">
+        <PropertyRef Name="idgh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__donhang__idtk__30F848ED">
+    <End Role="tk" Type="Self.tk" Multiplicity="0..1" />
+    <End Role="donhang" Type="Self.donhang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tk">
+        <PropertyRef Name="idtk" />
+      </Principal>
+      <Dependent Role="donhang">
+        <PropertyRef Name="idtk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__giohang__idsp__2E1BDC42">
+    <End Role="san_pham" Type="Self.san_pham" Multiplicity="0..1" />
+    <End Role="giohang" Type="Self.giohang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="san_pham">
+        <PropertyRef Name="idsp" />
+      </Principal>
+      <Dependent Role="giohang">
+        <PropertyRef Name="idsp" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__giohang__idtk__2D27B809">
+    <End Role="tk" Type="Self.tk" Multiplicity="0..1" />
+    <End Role="giohang" Type="Self.giohang" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tk">
+        <PropertyRef Name="idtk" />
+      </Principal>
+      <Dependent Role="giohang">
+        <PropertyRef Name="idtk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="nuochoa1Entities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="chon" EntityType="Self.chon" />
+    <EntitySet Name="danhmuc_sp" EntityType="Self.danhmuc_sp" />
+    <EntitySet Name="donhang" EntityType="Self.donhang" />
+    <EntitySet Name="giohang" EntityType="Self.giohang" />
+    <EntitySet Name="san_pham" EntityType="Self.san_pham" />
+    <EntitySet Name="tk" EntityType="Self.tk" />
+    <AssociationSet Name="FK__san_pham__iddm__286302EC" Association="Self.FK__san_pham__iddm__286302EC">
+      <End Role="danhmuc_sp" EntitySet="danhmuc_sp" />
+      <End Role="san_pham" EntitySet="san_pham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__donhang__idgh__31EC6D26" Association="Self.FK__donhang__idgh__31EC6D26">
+      <End Role="giohang" EntitySet="giohang" />
+      <End Role="donhang" EntitySet="donhang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__donhang__idtk__30F848ED" Association="Self.FK__donhang__idtk__30F848ED">
+      <End Role="tk" EntitySet="tk" />
+      <End Role="donhang" EntitySet="donhang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__giohang__idsp__2E1BDC42" Association="Self.FK__giohang__idsp__2E1BDC42">
+      <End Role="san_pham" EntitySet="san_pham" />
+      <End Role="giohang" EntitySet="giohang" />
+    </AssociationSet>
+    <AssociationSet Name="FK__giohang__idtk__2D27B809" Association="Self.FK__giohang__idtk__2D27B809">
+      <End Role="tk" EntitySet="tk" />
+      <End Role="giohang" EntitySet="giohang" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
